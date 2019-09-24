@@ -1,0 +1,12 @@
+[submodule "lib/ArduinoJson"]
+	path = lib/ArduinoJson
+	url = https://github.com/bblanchon/ArduinoJson
+[submodule "lib/pubsubclient"]
+	path = lib/pubsubclient
+	url = https://github.com/knolleary/pubsubclient/
+[submodule "lib/RadioHead"]
+	path = lib/RadioHead
+	url = https://github.com/adafruit/RadioHead
+[submodule "lib/Arduino"]
+	path = lib/Arduino
+	url = https://github.com/esp8266/Arduino
