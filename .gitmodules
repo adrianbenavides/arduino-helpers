@@ -10,3 +10,6 @@
 [submodule "lib/Arduino"]
 	path = lib/Arduino
 	url = https://github.com/esp8266/Arduino
+[submodule "lib/TinyGPSPlus"]
+	path = lib/TinyGPSPlus
+	url = https://github.com/mikalhart/TinyGPSPlus
