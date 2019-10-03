@@ -18,76 +18,49 @@ TinyGPSPlus Neo6m::read()
     return emptyGpsParser;
 }
 
-void Neo6m::print()
+void Neo6m::print(TinyGPSPlus gpsParser)
 {
-    while (gpsSerial.available() > 0)
+    if (gpsParser.location.isValid())
     {
-        if (!gpsParser.encode(gpsSerial.read()))
-            continue;
-
-        if (gpsParser.location.isValid())
-        {
-            Serial.print("Latitude: ");
-            Serial.println(gpsParser.location.lat(), 6);
-            Serial.print("Longitude: ");
-            Serial.println(gpsParser.location.lng(), 6);
-            Serial.print("Altitude: ");
-            Serial.println(gpsParser.altitude.meters());
-        }
-        else
-        {
-            Serial.println("Location: Not Available");
-        }
-
-        Serial.print("Date: ");
-        if (gpsParser.date.isValid())
-        {
-            Serial.print(gpsParser.date.month());
-            Serial.print("/");
-            Serial.print(gpsParser.date.day());
-            Serial.print("/");
-            Serial.println(gpsParser.date.year());
-        }
-        else
-        {
-            Serial.println("Not Available");
-        }
-
-        Serial.print("Time: ");
-        if (gpsParser.time.isValid())
-        {
-            if (gpsParser.time.hour() < 10)
-                Serial.print(F("0"));
-            Serial.print(gpsParser.time.hour());
-            Serial.print(":");
-            if (gpsParser.time.minute() < 10)
-                Serial.print(F("0"));
-            Serial.print(gpsParser.time.minute());
-            Serial.print(":");
-            if (gpsParser.time.second() < 10)
-                Serial.print(F("0"));
-            Serial.print(gpsParser.time.second());
-            Serial.print(".");
-            if (gpsParser.time.centisecond() < 10)
-                Serial.print(F("0"));
-            Serial.println(gpsParser.time.centisecond());
-        }
-        else
-        {
-            Serial.println("Not Available");
-        }
-
-        Serial.print("Speed: ");
-        if (gpsParser.speed.isValid())
-        {
-            Serial.println(gpsParser.speed.value());
-        }
-        else
-        {
-            Serial.println("Not Available");
-        }
-
-        Serial.println();
-        Serial.println();
+        Serial.print("Latitude: ");
+        Serial.println(gpsParser.location.lat(), 6);
+        Serial.print("Longitude: ");
+        Serial.println(gpsParser.location.lng(), 6);
+        Serial.print("Altitude: ");
+        Serial.println(gpsParser.altitude.meters());
     }
+    else
+    {
+        Serial.println("Location: Not Available");
+    }
+
+    Serial.print("Date: ");
+    if (gpsParser.date.isValid() && gpsParser.time.isValid())
+    {
+        Serial.printf("%d-%d-%dT%d:%d:%d+00:00\n",
+            gpsParser.date.year(),
+            gpsParser.date.month(),
+            gpsParser.date.day(),
+            gpsParser.time.hour(),
+            gpsParser.time.minute(),
+            gpsParser.time.second()
+        );
+    }
+    else
+    {
+        Serial.println("-");
+    }
+
+    Serial.print("Speed: ");
+    if (gpsParser.speed.isValid())
+    {
+        Serial.println(gpsParser.speed.kmph());
+    }
+    else
+    {
+        Serial.println("-");
+    }
+
+    Serial.println();
+    Serial.println();
 }
