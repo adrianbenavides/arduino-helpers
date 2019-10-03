@@ -1,8 +1,10 @@
 #include <RH_RF95.h>
+#include <assert.h>
 
 #define RFM95_RST D0 // RST
 #define RFM95_INT D1 // DIO0
 #define RFM95_LED D2
+
 //                  NodeMcu    UNO, Nano
 // -------------|------------|-----------|
 // PIN_SPI_SCK  | (14) -> D5 |    D13    |
@@ -17,6 +19,6 @@ class LoRa
 {
 public:
     void setup();
-    void receive();
-    void send();
+    std::string receive();
+    void send(std::string &message);
 };

@@ -38,35 +38,41 @@ void LoRa::setup()
     Serial.println("done");
 }
 
-void LoRa::receive()
+std::string LoRa::receive()
 {
-    if (!rf95.available()) {
+    if (!rf95.available())
+    {
         delay(100);
-        return;
+        return "";
     }
 
-    if (!rf95.recv(rf95_buf, &rf95_buf_len)) {
-        Serial.println("LoRa - Anything received");
-        return;
+    if (!rf95.recv(rf95_buf, &rf95_buf_len))
+    {
+        Serial.println("LoRa - No message received");
+        return "";
     }
 
-    digitalWrite(RFM95_LED, HIGH);
-
-    Serial.print("LoRa - Package received: ");
+    Serial.print("LoRa - Message received: ");
     Serial.println((char *)rf95_buf);
 
+    digitalWrite(RFM95_LED, HIGH);
+    delay(100);
     digitalWrite(RFM95_LED, LOW);
+
+    return std::string((char *)rf95_buf);
 }
 
-void LoRa::send()
+void LoRa::send(std::string &message)
 {
-    uint8_t input[] = "message, hola: this is Anu"; // Up to 255 chars
-    digitalWrite(RFM95_LED, HIGH);
+    const uint8_t messageLength = message.length() + 1;
+    assert(messageLength <= 256);
 
-    rf95.send(input, sizeof(input) + 1);
+    rf95.send((uint8_t *)message.c_str(), messageLength);
     rf95.waitPacketSent();
-    Serial.print("LoRa - Package sent: ");
-    Serial.println((char *)input);
+    Serial.print("LoRa - Message sent: ");
+    Serial.println(message.c_str());
 
+    digitalWrite(RFM95_LED, HIGH);
+    delay(100);
     digitalWrite(RFM95_LED, LOW);
 }
