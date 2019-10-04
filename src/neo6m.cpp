@@ -40,13 +40,12 @@ void Neo6m::print(TinyGPSPlus gpsParser)
     if (gpsParser.date.isValid() && gpsParser.time.isValid())
     {
         Serial.printf("%d-%d-%dT%d:%d:%d+00:00\n",
-            gpsParser.date.year(),
-            gpsParser.date.month(),
-            gpsParser.date.day(),
-            gpsParser.time.hour(),
-            gpsParser.time.minute(),
-            gpsParser.time.second()
-        );
+                      gpsParser.date.year(),
+                      gpsParser.date.month(),
+                      gpsParser.date.day(),
+                      gpsParser.time.hour(),
+                      gpsParser.time.minute(),
+                      gpsParser.time.second());
     }
     else
     {

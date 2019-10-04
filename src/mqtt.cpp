@@ -28,7 +28,7 @@ void Mqtt::setup(PubSubClient &pubsub, std::function<void(char *, uint8_t *, uns
     String clientId = String(deviceId);
     this->clientId = std::string(clientId.c_str());
 
-    if(this->hasLastWill)
+    if (this->hasLastWill)
     {
         String topic = String(this->lastWill.topic.c_str());
         topic.replace("+", clientId);
@@ -46,16 +46,18 @@ void Mqtt::loop(PubSubClient &pubsub)
             Serial.printf("Attempting MQTT connection for device %s", mqttId.c_str());
 
             bool connected = false;
-            if(this->hasLastWill) {
+            if (this->hasLastWill)
+            {
                 Serial.print(" with last will... ");
                 connected = pubsub.connect(
                     mqttId.c_str(),
                     this->lastWill.topic.c_str(),
                     this->lastWill.qos,
                     this->lastWill.retain,
-                    this->lastWill.message.c_str()
-                );
-            } else {
+                    this->lastWill.message.c_str());
+            }
+            else
+            {
                 Serial.print(" without last will... ");
                 connected = pubsub.connect(mqttId.c_str());
             }
@@ -63,7 +65,8 @@ void Mqtt::loop(PubSubClient &pubsub)
             if (connected)
             {
                 Serial.println("done");
-                if(this->hasLastWill) {
+                if (this->hasLastWill)
+                {
                     Serial.printf("Last will message published to topic %s\n", this->lastWill.topic.c_str());
                     pubsub.publish(this->lastWill.topic.c_str(), "1", true);
                 }

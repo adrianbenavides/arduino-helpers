@@ -2,7 +2,8 @@
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
 
-typedef struct {
+typedef struct
+{
     std::string topic;
     std::string message;
     uint qos;
