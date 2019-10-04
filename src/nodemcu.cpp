@@ -14,7 +14,6 @@ void NodeMcu::setup()
 {
     this->setupFilesystem();
     this->deserializeSettings();
-    this->setupWifi();
 }
 
 void NodeMcu::setupFilesystem()

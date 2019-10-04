@@ -13,6 +13,7 @@ public:
     uint deviceId;
 
     void setup();
+    void setupWifi();
 
 private:
     std::string settings;
@@ -22,5 +23,4 @@ private:
 
     void setupFilesystem();
     void deserializeSettings();
-    void setupWifi();
 };
