@@ -10,7 +10,19 @@ NodeMcu::NodeMcu(std::string &settings)
     this->settings = settings;
 }
 
-void NodeMcu::setup()
+void NodeMcu::setupWithWiFi()
+{
+    this->init();
+    this->enableWiFi();
+}
+
+void NodeMcu::setupWithoutWiFi()
+{
+    this->init();
+    this->disableWiFi();
+}
+
+void NodeMcu::init()
 {
     this->setupFilesystem();
     this->deserializeSettings();
@@ -101,7 +113,7 @@ void NodeMcu::deserializeSettings()
     Serial.printf("Device id: %i\n", this->deviceId);
 }
 
-void NodeMcu::setupWifi()
+void NodeMcu::enableWiFi()
 {
     Serial.printf("Connecting to %s...", this->ssid);
     WiFi.begin(this->ssid, this->password);
@@ -111,4 +123,11 @@ void NodeMcu::setupWifi()
         Serial.print(".");
     }
     Serial.println(F(" done"));
+}
+
+void NodeMcu::disableWiFi()
+{
+    Serial.print("Disabling Wifi... ");
+    WiFi.forceSleepBegin();
+    Serial.println("done");
 }

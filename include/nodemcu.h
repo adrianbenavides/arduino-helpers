@@ -11,9 +11,8 @@ public:
     NodeMcu(std::string &settings);
 
     uint deviceId;
-
-    void setup();
-    void setupWifi();
+    void setupWithWiFi();
+    void setupWithoutWiFi();
 
 private:
     std::string settings;
@@ -21,6 +20,9 @@ private:
     const char *ssid;
     const char *password;
 
+    void init();
     void setupFilesystem();
     void deserializeSettings();
+    void enableWiFi();
+    void disableWiFi();
 };
