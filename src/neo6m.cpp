@@ -6,7 +6,9 @@ static SoftwareSerial gpsSerial(NEO6M_RX_PIN, NEO6M_TX_PIN);
 
 void Neo6m::setup()
 {
+    Serial.print("Setting up Neo-6M GPS module... ");
     gpsSerial.begin(NEO6M_BAUD);
+    Serial.println("done");
 }
 
 TinyGPSPlus Neo6m::read()
